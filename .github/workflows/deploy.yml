@@ -12,23 +12,45 @@ env:
 jobs:
   build:
     name: Build image
-<<<<<<< HEAD
-    runs-on: ubuntu-slim
-=======
-    runs-on: ubuntu-latest
->>>>>>> 74ecb00a8bbf900c06b473b5dee883806102ad98
+    runs-on: [self-hosted, Windows, X64]
     steps:
       - uses: actions/checkout@v5
+
+      - name: Verify Docker is using Linux containers
+        shell: pwsh
+        run: |
+          $osType = docker info --format '{{.OSType}}'
+          if ($LASTEXITCODE -ne 0) {
+            throw "Docker Engine is unavailable to the runner."
+          }
+          if ($osType -ne "linux") {
+            throw "Switch Docker Desktop to Linux containers before building this app."
+          }
+
       - run: docker compose build
+
+  test:
+    name: Run unit tests
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@v5
+
+      - name: Set up Python
+        uses: actions/setup-python@v6
+        with:
+          python-version: "3.12"
+          cache: pip
+
+      - name: Install dependencies
+        run: python -m pip install -r requirements.txt
+
+      - name: Run unit tests
+        run: python -m unittest discover -s tests -v
 
   deploy:
     name: Deploy container
-<<<<<<< HEAD
-    runs-on: ubuntu-slim
-=======
-    runs-on: ubuntu-latest
->>>>>>> 74ecb00a8bbf900c06b473b5dee883806102ad98
-    needs: build
+    runs-on: [self-hosted, Windows, X64]
+    needs: [build, test]
     steps:
       - uses: actions/checkout@v5
       - run: docker compose up --detach --force-recreate
