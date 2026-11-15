@@ -9,13 +9,24 @@ permissions:
 jobs:
   build:
     name: Build Docker image
-    runs-on: linux-ubuntu-24.04
+    runs-on: [self-hosted, Windows, X64]
     env:
       APP_PORT: "8001"
       COMPOSE_PROJECT_NAME: cicd
     steps:
       - name: Check out source
         uses: actions/checkout@v5
+
+      - name: Verify Docker is using Linux containers
+        shell: pwsh
+        run: |
+          $osType = docker info --format '{{.OSType}}'
+          if ($LASTEXITCODE -ne 0) {
+            throw "Docker Engine is unavailable to the runner."
+          }
+          if ($osType -ne "linux") {
+            throw "Switch Docker Desktop to Linux containers before building this app."
+          }
 
       - name: Build image on Docker host
         run: docker compose build
@@ -53,4 +64,4 @@ jobs:
         uses: actions/checkout@v5
 
       - name: Start updated application
-        run: docker compose up --detach
+        run: docker compose up --detach --force-recreate
