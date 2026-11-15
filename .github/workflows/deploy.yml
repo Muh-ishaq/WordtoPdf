@@ -1,0 +1,56 @@
+name: Build, test, and deploy
+
+on:
+  push:
+
+permissions:
+  contents: read
+
+jobs:
+  build:
+    name: Build Docker image
+    runs-on: [self-hosted, Windows, X64, docker-host]
+    env:
+      APP_PORT: "8001"
+      COMPOSE_PROJECT_NAME: cicd
+    steps:
+      - name: Check out source
+        uses: actions/checkout@v4
+
+      - name: Build image on Docker host
+        run: docker compose build
+
+  test:
+    name: Run unit tests
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out source
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+          cache: pip
+
+      - name: Install dependencies
+        run: python -m pip install -r requirements.txt
+
+      - name: Run unit tests
+        run: python -m unittest discover -s tests -v
+
+  deploy:
+    name: Deploy to local Docker host
+    runs-on: [self-hosted, Windows, X64, docker-host]
+    needs:
+      - build
+      - test
+    env:
+      APP_PORT: "8001"
+      COMPOSE_PROJECT_NAME: cicd
+    steps:
+      - name: Check out source
+        uses: actions/checkout@v4
+
+      - name: Start updated application
+        run: docker compose up --detach
