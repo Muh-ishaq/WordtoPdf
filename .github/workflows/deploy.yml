@@ -19,7 +19,7 @@ jobs:
 
   deploy:
     name: Deploy container
-    runs-on: [self-hosted, Windows, X64]
+    runs-on: ubuntu-latest
     needs: build
     steps:
       - uses: actions/checkout@v5
