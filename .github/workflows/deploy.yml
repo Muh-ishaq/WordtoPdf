@@ -12,6 +12,6 @@ jobs:
 
       - name: Build new image and redeploy
         run: docker compose up -d --build
-
+# delete old images
       - name: Remove old unused images
         run: docker image prune -f
