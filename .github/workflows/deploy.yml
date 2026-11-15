@@ -9,7 +9,7 @@ permissions:
 jobs:
   build:
     name: Build Docker image
-    runs-on: [self-hosted, Windows, X64, docker-host]
+    runs-on: [self-hosted, Windows, X64]
     env:
       APP_PORT: "8001"
       COMPOSE_PROJECT_NAME: cicd
@@ -41,7 +41,7 @@ jobs:
 
   deploy:
     name: Deploy to local Docker host
-    runs-on: [self-hosted, Windows, X64, docker-host]
+    runs-on: [self-hosted, Windows, X64]
     needs:
       - build
       - test
