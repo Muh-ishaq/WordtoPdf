@@ -9,7 +9,7 @@ permissions:
 jobs:
   build:
     name: Build Docker image
-    runs-on: [self-hosted, Windows, X64]
+    runs-on: windows-2022
     env:
       APP_PORT: "8001"
       COMPOSE_PROJECT_NAME: cicd
