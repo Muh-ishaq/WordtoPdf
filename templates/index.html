@@ -1,0 +1,99 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="theme-color" content="#f5f7fb">
+    <meta name="description" content="Convert Word documents into clean, shareable PDFs in seconds.">
+    <title>Paperplane — Word to PDF</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <script src="{{ url_for('static', filename='app.js') }}" defer></script>
+  </head>
+  <body>
+    <header class="topbar">
+      <a class="brand" href="/" aria-label="Paperplane home">
+        <span class="brand-mark" aria-hidden="true">
+          <svg viewBox="0 0 32 32" fill="none">
+            <path d="M27 5 4.7 13.6c-1.1.4-1 2 .1 2.3l8.4 2.5 2.5 8.4c.3 1.1 1.9 1.2 2.3.1L27 5Z" fill="currentColor"/>
+            <path d="m13.3 18.4 7.1-7.1" stroke="#fff" stroke-width="1.8" stroke-linecap="round"/>
+          </svg>
+        </span>
+        <span>paperplane<span class="brand-period">.</span></span>
+      </a>
+      <div class="topbar-note"><span class="lock-icon" aria-hidden="true">⌑</span> Private by design</div>
+    </header>
+
+    <main>
+      <section class="hero" aria-labelledby="page-title">
+        <div class="eyebrow"><span class="eyebrow-dot"></span> YOUR DOCUMENTS, READY TO GO</div>
+        <h1 id="page-title">Word in.<br><span>PDF out.</span></h1>
+        <p class="hero-copy">The little document upgrade that makes a big difference. Drop in a Word file and get a polished PDF in seconds.</p>
+
+        <div class="converter-card">
+          <form id="upload-form">
+            <input id="document-input" name="document" type="file" accept=".doc,.docx,application/msword,application/vnd.openxmlformats-officedocument.wordprocessingml.document" hidden>
+            <label id="drop-zone" class="drop-zone" for="document-input" tabindex="0">
+              <span class="upload-icon" aria-hidden="true">
+                <svg viewBox="0 0 48 48" fill="none">
+                  <path d="M24 31V9m0 0-8 8m8-8 8 8" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/>
+                  <path d="M11 27v9a3 3 0 0 0 3 3h20a3 3 0 0 0 3-3v-9" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"/>
+                </svg>
+              </span>
+              <span class="drop-title" id="drop-title">Drop your Word file here</span>
+              <span class="drop-subtitle" id="drop-subtitle">or <span class="browse-link">browse files</span> on your device</span>
+              <span class="file-note">.DOC or .DOCX <span aria-hidden="true">·</span> UP TO 25 MB</span>
+            </label>
+
+            <div class="selected-file" id="selected-file" hidden>
+              <span class="file-type-icon" aria-hidden="true">W</span>
+              <span class="file-details">
+                <span class="file-name" id="file-name"></span>
+                <span class="file-size" id="file-size"></span>
+              </span>
+              <button class="remove-file" id="remove-file" type="button" aria-label="Remove selected file">×</button>
+            </div>
+
+            <button class="convert-button" id="convert-button" type="submit" disabled>
+              <span id="button-label">Make it a PDF</span>
+              <svg id="button-arrow" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                <path d="M5 12h14m-6-6 6 6-6 6" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+              <span class="spinner" id="spinner" hidden></span>
+            </button>
+            <p class="status-message" id="status-message" role="status" aria-live="polite"></p>
+          </form>
+
+          <div class="card-footnote">
+            <span class="shield-icon" aria-hidden="true">✳</span>
+            Your files are processed securely and never stored.
+          </div>
+        </div>
+      </section>
+
+      <section class="steps" aria-label="How it works">
+        <div class="step">
+          <span class="step-number">01</span>
+          <span class="step-title">Choose a file</span>
+          <span class="step-copy">DOC or DOCX, up to 25 MB.</span>
+        </div>
+        <span class="step-connector" aria-hidden="true"></span>
+        <div class="step">
+          <span class="step-number">02</span>
+          <span class="step-title">We do the magic</span>
+          <span class="step-copy">Your layout stays just right.</span>
+        </div>
+        <span class="step-connector" aria-hidden="true"></span>
+        <div class="step">
+          <span class="step-number">03</span>
+          <span class="step-title">Save your PDF</span>
+          <span class="step-copy">Ready to share, anywhere.</span>
+        </div>
+      </section>
+    </main>
+
+    <footer class="footer">
+      <span>Made for documents that go places.</span>
+      <span>Simple, secure, and to the point.</span>
+    </footer>
+  </body>
+</html>
