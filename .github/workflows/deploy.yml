@@ -12,14 +12,22 @@ env:
 jobs:
   build:
     name: Build image
+<<<<<<< HEAD
     runs-on: ubuntu-slim
+=======
+    runs-on: ubuntu-latest
+>>>>>>> 74ecb00a8bbf900c06b473b5dee883806102ad98
     steps:
       - uses: actions/checkout@v5
       - run: docker compose build
 
   deploy:
     name: Deploy container
+<<<<<<< HEAD
     runs-on: ubuntu-slim
+=======
+    runs-on: ubuntu-latest
+>>>>>>> 74ecb00a8bbf900c06b473b5dee883806102ad98
     needs: build
     steps:
       - uses: actions/checkout@v5
